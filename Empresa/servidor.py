@@ -22,7 +22,28 @@ def criar_tabela_funcionarios():
     cursor.execute("CREATE TABLE IF NOT EXISTS funcionarios (nome TEXT PRIMARY KEY)")
     cursor.execute("SELECT COUNT(*) FROM funcionarios")
     if cursor.fetchone()[0] == 0:
-        funcionarios_iniciais = [("João",), ("Maria",), ("Carlos",)]
+        funcionarios_iniciais = [
+            ("João Victor",),
+            ("Maria Rita",),
+            ("Carlos Alberto",),
+            ("Rose Paiva",),
+            ("Maria Rita",),
+            ("Carlos Alberto",)
+            ('Ana Clara',),
+            ('Pedro Henrique',),
+            ('Fernanda Souza',),
+            ('Lucas Silva',),
+            ('Juliana Costa',), 
+            ('Roberto Lima',),
+            ('Patrícia Gomes',),
+            ('Eduardo Martins',),
+            ('Camila Rocha',),
+            ('Thiago Pereira',),
+            ('Larissa Alves',),
+            ('Rafael Dias',),
+            ('Isabela Santos',),
+            ('Gustavo Oliveira',)
+            ]
         cursor.executemany("INSERT INTO funcionarios (nome) VALUES (?)", funcionarios_iniciais)
         conn.commit()
 
