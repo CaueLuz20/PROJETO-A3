@@ -125,11 +125,7 @@ def processar_requisicao(dados):
                 tarefas = [{"id": t[0], "descricao": t[1], "funcionario": t[2]} for t in cursor.fetchall()]
                 return {"relatorio": tarefas}
             elif tipo_rel == "funcionarios_sem_tarefas_pendentes":
-                cursor.execute('''
-                    SELECT DISTINCT funcionario FROM tarefas WHERE funcionario NOT IN (
-                        SELECT DISTINCT funcionario FROM tarefas WHERE status='pendente'
-                    )
-                ''')
+                cursor.execute("SELECT nome FROM funcionarios WHERE nome NOT IN (SELECT funcionario FROM tarefas WHERE status = 'pendente')")
                 funcs = [f[0] for f in cursor.fetchall()]
                 return {"relatorio": funcs}
             else:
