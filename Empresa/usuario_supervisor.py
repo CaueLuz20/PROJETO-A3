@@ -60,7 +60,6 @@ def main():
         elif escolha == "2":
             func = input("Nome do funcionário: ")
             res = listar_tarefas(func)
-            res = listar_funcionarios()
             if "funcionarios" in res and func not in res["funcionarios"]:
                 print("Funcionário não cadastrado.")
                 input("\nPressione Enter para voltar ao menu...")
