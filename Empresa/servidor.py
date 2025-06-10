@@ -23,26 +23,26 @@ def criar_tabela_funcionarios():
     cursor.execute("SELECT COUNT(*) FROM funcionarios")
     if cursor.fetchone()[0] == 0:
         funcionarios_iniciais = [
-            ("João Victor",),
-            ("Maria Rita",),
-            ("Carlos Alberto",),
-            ("Rose Paiva",),
-            ("Maria Rita",),
-            ("Carlos Alberto",)
-            ('Ana Clara',),
-            ('Pedro Henrique',),
-            ('Fernanda Souza',),
-            ('Lucas Silva',),
-            ('Juliana Costa',), 
-            ('Roberto Lima',),
-            ('Patrícia Gomes',),
-            ('Eduardo Martins',),
-            ('Camila Rocha',),
-            ('Thiago Pereira',),
-            ('Larissa Alves',),
-            ('Rafael Dias',),
-            ('Isabela Santos',),
-            ('Gustavo Oliveira',)
+            ("João",),
+            ("Maria",),
+            ("Carlos",),
+            ("Rose",),
+            ("Rita",),
+            ("Alberto",),
+            ('Ana',),
+            ('Pedro',),
+            ('Fernanda',),
+            ('Lucas',),
+            ('Julia',), 
+            ('Roberto',),
+            ('Patrícia',),
+            ('Eduardo',),
+            ('Camila',),
+            ('Thiago',),
+            ('Larissa',),
+            ('Rafael',),
+            ('Isabela',),
+            ('Gustavo',)
             ]
         cursor.executemany("INSERT INTO funcionarios (nome) VALUES (?)", funcionarios_iniciais)
         conn.commit()
@@ -69,11 +69,16 @@ def processar_requisicao(dados):
             if not tarefa:
                 return {"erro": "Tarefa não encontrada"}
             if tarefa[0] == "concluida":
-                return {"erro": "Tarefa já concluída"}
+                return {"erro": "Essa Tareja ja foi concluída anteriormente"}
             now = datetime.now().isoformat()
             cursor.execute("UPDATE tarefas SET status='concluida', data_conclusao=? WHERE id=?", (now, tarefa_id))
             conn.commit()
-            return {"sucesso": "Tarefa concluída"}
+            return {"sucesso": "Tarefa concluída com sucesso"}
+        
+        elif acao == "listar_funcionarios":
+            cursor.execute("SELECT nome FROM funcionarios")
+            funcionarios = [f[0] for f in cursor.fetchall()]
+            return {"funcionarios": funcionarios}
 
         else:
             return {"erro": "Ação inválida para funcionário"}

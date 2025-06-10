@@ -19,12 +19,16 @@ def solicitar_relatorio(tipo_relatorio):
 
 def main():
     while True:
+        print("____________________________________________________________")	
+        print("\nGerente, Seja Bem-vindo(a) ao sistema de gerenciamento de tarefas")
+        print("____________________________________________________________")
         print("\n1 - Relatório: todas as tarefas cadastradas")
         print("2 - Relatório: tarefas pendentes")
         print("3 - Relatório: funcionários sem tarefas pendentes")
         print("0 - Sair")
         print("_____________________________________________________")
-        escolha = input("Escolha: ")
+        escolha = input("\nEscolha: ")
+        
         if escolha == "1":
             res = solicitar_relatorio("tarefas_cadastradas")
             if "erro" in res:
@@ -36,6 +40,9 @@ def main():
                         print(f"ID {t['id']} - {t['descricao']} - Funcionário: {t['funcionario']} - Status: {t['status']}")
                 else:
                     print("Nenhuma tarefa cadastrada.")
+                
+                input("\nPressione Enter para voltar ao menu...")
+                
         elif escolha == "2":
             res = solicitar_relatorio("tarefas_pendentes")
             if "erro" in res:
@@ -47,6 +54,9 @@ def main():
                         print(f"ID {t['id']} - {t['descricao']} - Funcionário: {t['funcionario']}")
                 else:
                     print("Nenhuma tarefa pendente.")
+                    
+                input("\nPressione Enter para voltar ao menu...")
+                
         elif escolha == "3":
             res = solicitar_relatorio("funcionarios_sem_tarefas_pendentes")
             if "erro" in res:
@@ -59,6 +69,8 @@ def main():
                         print(f"- {f}")
                 else:
                     print("Nenhum funcionário sem tarefas pendentes.")
+            input("\nPressione Enter para voltar ao menu...")
+            
         elif escolha == "0":
             break
         else:
