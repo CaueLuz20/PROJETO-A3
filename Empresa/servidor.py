@@ -18,6 +18,16 @@ def criar_tabela():
 
 criar_tabela()
 
+def criar_tabela_funcionarios():
+    cursor.execute("CREATE TABLE IF NOT EXISTS funcionarios (nome TEXT PRIMARY KEY)")
+    cursor.execute("SELECT COUNT(*) FROM funcionarios")
+    if cursor.fetchone()[0] == 0:
+        funcionarios_iniciais = [("João",), ("Maria",), ("Carlos",)]
+        cursor.executemany("INSERT INTO funcionarios (nome) VALUES (?)", funcionarios_iniciais)
+        conn.commit()
+
+criar_tabela_funcionarios()
+
 def processar_requisicao(dados):
     tipo = dados.get("tipo_cliente")
     acao = dados.get("acao")
@@ -53,6 +63,9 @@ def processar_requisicao(dados):
             descricao = dados.get("descricao")
             if not funcionario or not descricao:
                 return {"erro": "Dados insuficientes para cadastrar tarefa"}
+            cursor.execute("SELECT 1 FROM funcionarios WHERE nome=?", (funcionario,))
+            if cursor.fetchone() is None:
+                return {"erro": "Funcionário não cadastrado"}
             now = datetime.now().isoformat()
             cursor.execute("INSERT INTO tarefas (descricao, funcionario, data_criacao) VALUES (?, ?, ?)", (descricao, funcionario, now))
             conn.commit()
@@ -65,6 +78,12 @@ def processar_requisicao(dados):
             cursor.execute("SELECT id, descricao, status FROM tarefas WHERE funcionario=?", (funcionario,))
             tarefas = [{"id": t[0], "descricao": t[1], "status": t[2]} for t in cursor.fetchall()]
             return {"tarefas": tarefas}
+        
+        elif acao == "listar_funcionarios":
+            cursor.execute("SELECT nome FROM funcionarios")
+            funcionarios = [f[0] for f in cursor.fetchall()]
+            return {"funcionarios": funcionarios}
+        
         else:
             return {"erro": "Ação inválida para supervisor"}
 
