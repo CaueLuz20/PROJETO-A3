@@ -22,7 +22,28 @@ def criar_tabela_funcionarios():
     cursor.execute("CREATE TABLE IF NOT EXISTS funcionarios (nome TEXT PRIMARY KEY)")
     cursor.execute("SELECT COUNT(*) FROM funcionarios")
     if cursor.fetchone()[0] == 0:
-        funcionarios_iniciais = [("João",), ("Maria",), ("Carlos",)]
+        funcionarios_iniciais = [
+            ("João",),
+            ("Maria",),
+            ("Carlos",),
+            ("Rose",),
+            ("Rita",),
+            ("Alberto",),
+            ('Ana',),
+            ('Pedro',),
+            ('Fernanda',),
+            ('Lucas',),
+            ('Julia',), 
+            ('Roberto',),
+            ('Patrícia',),
+            ('Eduardo',),
+            ('Camila',),
+            ('Thiago',),
+            ('Larissa',),
+            ('Rafael',),
+            ('Isabela',),
+            ('Gustavo',)
+            ]
         cursor.executemany("INSERT INTO funcionarios (nome) VALUES (?)", funcionarios_iniciais)
         conn.commit()
 
@@ -48,11 +69,16 @@ def processar_requisicao(dados):
             if not tarefa:
                 return {"erro": "Tarefa não encontrada"}
             if tarefa[0] == "concluida":
-                return {"erro": "Tarefa já concluída"}
+                return {"erro": "Essa Tareja ja foi concluída anteriormente"}
             now = datetime.now().isoformat()
             cursor.execute("UPDATE tarefas SET status='concluida', data_conclusao=? WHERE id=?", (now, tarefa_id))
             conn.commit()
-            return {"sucesso": "Tarefa concluída"}
+            return {"sucesso": "Tarefa concluída com sucesso"}
+        
+        elif acao == "listar_funcionarios":
+            cursor.execute("SELECT nome FROM funcionarios")
+            funcionarios = [f[0] for f in cursor.fetchall()]
+            return {"funcionarios": funcionarios}
 
         else:
             return {"erro": "Ação inválida para funcionário"}
@@ -99,11 +125,7 @@ def processar_requisicao(dados):
                 tarefas = [{"id": t[0], "descricao": t[1], "funcionario": t[2]} for t in cursor.fetchall()]
                 return {"relatorio": tarefas}
             elif tipo_rel == "funcionarios_sem_tarefas_pendentes":
-                cursor.execute('''
-                    SELECT DISTINCT funcionario FROM tarefas WHERE funcionario NOT IN (
-                        SELECT DISTINCT funcionario FROM tarefas WHERE status='pendente'
-                    )
-                ''')
+                cursor.execute("SELECT nome FROM funcionarios WHERE nome NOT IN (SELECT funcionario FROM tarefas WHERE status = 'pendente')")
                 funcs = [f[0] for f in cursor.fetchall()]
                 return {"relatorio": funcs}
             else:
