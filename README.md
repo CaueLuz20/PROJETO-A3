@@ -1,2 +1,8 @@
 # Projeto-A3
-Projeto A3 Sistemas distribuídos e mobile
+Repositorio do Projeto A3 da UC Sistemas distribuídos e mobile feito pelos alunos: 
+
+Caue
+Diogo
+Pedro
+Danilo
+Gustavo
