@@ -26,20 +26,20 @@ def listar_funcionarios():
 
 def main():
     while True:
-        print("\n____________________________________________________________")
-        nome = input("Digite seu nome, para entrar no sistema: ").strip()
+        print("____________________________________________________________")
+        nome = input("Digite seu nome, para entrar no sistema: ").strip().capitalize()
         print("____________________________________________________________")
         
         res = listar_funcionarios()
 
         if "funcionarios" in res and nome.lower() not in [f.lower() for f in res["funcionarios"]]:
             print("Esse usuário não existe! Por favor, verifique o nome digitado.")
+            print("____________________________________________________________")
             input("Pressione Enter para tentar novamente...")
             continue  
         break  
 
     while True:
-        print("\n____________________________________________________________")
         print(nome, ", Seja Bem-Vindo ao sistema de gerenciamento de tarefas")
         print("____________________________________________________________")
         print("\n1 - Listar tarefas pendentes")

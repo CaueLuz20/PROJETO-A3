@@ -46,7 +46,7 @@ def main():
         escolha = input("\nEscolha: ")
         
         if escolha == "1":
-            func = input("Nome do funcionário: ")
+            func = input("Nome do funcionário: ").strip().capitalize()
             res = listar_funcionarios()
             if "funcionarios" in res and func not in res["funcionarios"]:
                 print("Funcionário não cadastrado.")
@@ -58,7 +58,7 @@ def main():
             input("\nPressione Enter para voltar ao menu...")
             
         elif escolha == "2":
-            func = input("Nome do funcionário: ")
+            func = input("Nome do funcionário: ").strip().capitalize()
             res = listar_tarefas(func)
             if "funcionarios" in res and func not in res["funcionarios"]:
                 print("Funcionário não cadastrado.")
