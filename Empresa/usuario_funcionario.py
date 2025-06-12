@@ -40,7 +40,7 @@ def main():
         break  
 
     while True:
-        print(nome, ", Seja Bem-Vindo ao sistema de gerenciamento de tarefas")
+        print(nome, ", Seja Bem-Vindo(a) ao sistema de gerenciamento de tarefas")
         print("____________________________________________________________")
         print("\n1 - Listar tarefas pendentes")
         print("2 - Concluir tarefa")
